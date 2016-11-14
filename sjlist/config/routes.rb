@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   resources :users
   resources :categories do
-    resources :posts
+    resources :posts, only: [:index, :show, :new]
   end
 
   get '/sessions/new' => 'sessions#new'

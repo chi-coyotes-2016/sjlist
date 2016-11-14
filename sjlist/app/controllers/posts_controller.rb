@@ -42,7 +42,7 @@ class PostsController < ApplicationController
   def edit
     if logged_in?
       @post = Post.find(params[:id])
-      if current_user = @post.author
+      if current_user == @post.author
         @category = @post.category
         render :edit
       else
@@ -57,17 +57,26 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find_by(id: params[:id])
-    if @post.update_attributes(post_params)
-      redirect_to @post
+    if logged_in?
+      if @post.author == current_user
+        if @post.update_attributes(post_params)
+          redirect_to @post
+        else
+          render :edit
+        end
+      else
+        @errors = ["naughty naughty"]
+        render :show
+      end
     else
-      render :edit
+      redirect_to @post
     end
   end
 
   def destroy
     if logged_in?
       @post = Post.find(params[:id])
-      if current_user = @post.author
+      if current_user == @post.author
         @post.destroy
         # change this to category index when created
         redirect_to @post.category

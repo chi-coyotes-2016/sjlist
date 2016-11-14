@@ -1,7 +1,2 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+10.times { Category.find_or_create_by(name: Faker::Pokemon.name, description: Faker::StarWars.quote)}
+150.times { Post.find_or_create_by(title: Faker::Space.nebula, body: Faker::Hipster.paragraph, author_id: (1 + rand(User.count - 1)), category_id: (1 + rand(Category.count - 1)))}

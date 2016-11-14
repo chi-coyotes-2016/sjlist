@@ -5,7 +5,7 @@
 <p><%= @post.body %></p>
 <p>Posted at: <%= pretty_time(@post.created_at) %></p>
 
-<% if @post.author = current_user %>
+<% if @post.author == current_user %>
 <%= link_to 'Edit', edit_post_url %>
 <%= link_to 'Delete', post_path(@post), method: :delete, data: {confirm: "Are you sure you want to delete?"} %>
 <% end %>
