@@ -1,0 +1,14 @@
+<h1>Posts: </h1>
+<% if @posts.any? %>
+<ul class="posts">
+  <% @posts.each do |post| %>
+  <li><%= link_to post.title, post_path(post) %></li>
+  <% end %>
+</ul>
+<% end %>
+
+<% if params[:category_id] %>
+<%= link_to 'New Post', new_category_post_path(@category) %>
+<% else %>
+<%= link_to 'New Post', new_post_url %>
+<% end %>
