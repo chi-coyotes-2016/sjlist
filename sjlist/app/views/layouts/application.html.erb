@@ -8,9 +8,13 @@
 </head>
 <body>
 
-<%= link_to 'New User', new_user_url %>
+<% if logged_in? %>
+  <%= link_to 'Logout', sessions_url, method: :delete %>
+<% else %>
+  <%= link_to 'New User', new_user_url %>
+  <%= link_to 'Login', sessions_new_url %>
+<% end %>
 
-<%= link_to 'Login', sessions_new_url %>
 <%= yield %>
 
 </body>

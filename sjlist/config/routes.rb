@@ -1,13 +1,20 @@
 Rails.application.routes.draw do
 
   resources :posts
-  root 'posts#index'
+  root 'categories#index'
 
   resources :users
+  resources :categories do
+    resources :posts
+  end
 
   get '/sessions/new' => 'sessions#new'
   post '/sessions' => 'sessions#create'
   delete '/sessions' => 'sessions#destroy'
+
+  # get '/categories' => 'categories#index'
+  # get '/categories/:id', to: 'categories#show', as: 'category'
+  # post 'categories/:id/posts/new', to: 'categories#create'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
