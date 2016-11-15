@@ -62,6 +62,7 @@ class PostsController < ApplicationController
         if @post.update_attributes(post_params)
           redirect_to @post
         else
+          @errors = @post.errors.full_messages
           render :edit
         end
       else
@@ -75,14 +76,18 @@ class PostsController < ApplicationController
 
   def destroy
     if logged_in?
-      @post = Post.find(params[:id])
-      if current_user == @post.author
-        @post.destroy
-        # change this to category index when created
-        redirect_to @post.category
+      @post = Post.find_by(id: params[:id])
+      if @post
+        if current_user == @post.author
+          @post.destroy
+          # change this to category index when created
+          redirect_to @post.category
+        else
+          @errors = ["You are not the creator of this..."]
+          redirect_to @post
+        end
       else
-        @errors = ["You are not the creator of this..."]
-        redirect_to @post
+        redirect_to categories_url
       end
     else
       @errors = ["You are not logged in"]
